@@ -27,6 +27,7 @@ See `docs/PRD.md` for full spec.
 - [Manoj-Sasanala](https://github.com/Manoj-Sasanala)
 - [tejasnayak24](https://github.com/tejasnayak24)
 - [deepikajdev](https://github.com/deepikajdev)
+- [Adarsh-Thakur-03](https://github.com/Adarsh-Thakur-03)
 
 ## License
 MIT — see LICENSE
