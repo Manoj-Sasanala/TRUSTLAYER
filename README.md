@@ -24,7 +24,9 @@ See `docs/PRD.md` for full spec.
 - Gemini API, structured PurchaseIntent JSON, Pydantic-validated. Mock fallback if LLM fails.
 
 ## Contributors
-- Add team GitHub profiles here
+- [Manoj-Sasanala](https://github.com/Manoj-Sasanala)
+- [tejasnayak24](https://github.com/tejasnayak24)
+- [deepikajdev](https://github.com/deepikajdev)
 
 ## License
 MIT — see LICENSE
