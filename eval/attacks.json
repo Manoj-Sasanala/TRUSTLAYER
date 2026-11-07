@@ -92,5 +92,52 @@
     },
     "expected": "BLOCK",
     "expected_rule": "R1"
-  }
+  },
+  {
+  "id": "A03",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A03",
+    "mandate_id": "m_A03",
+    "merchant_id": "m_101",
+    "item_id": "p_203",
+    "quantity": 1,
+    "amount": "19.99",
+    "currency": "USD",
+    "quote_id": "q_A03",
+    "agent_note": "Purchase USB-C Charger"
+  },
+  "mandate": {
+    "id": "m_A03",
+    "total_budget": "200.00",
+    "per_txn_cap": "15.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "30.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_203": {
+        "price": "19.99",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "88f5e68125d1287161bd8f009b2e4f2983b11780c98ad855a654c173b68005fa"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+}
 ]
