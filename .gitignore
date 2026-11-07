@@ -8,3 +8,5 @@ dist/
 *.pem
 .venv/
 venv/
+.ipynb_checkpoints/
+*.csv
