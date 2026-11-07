@@ -16,7 +16,12 @@ User sets a scoped mandate (budget, per-txn cap, allowed merchants, expiry). Age
 Never push to `main`. Push your branch, open a PR, Manoj merges.
 
 ## Status
-Day 1: backend foundations built and tested (32 tests). The rules engine, agent and dashboard are stubs their owners fill in.
+Day 1: backend complete except the rules engine and the live PayPal capture (54 tests).
+`rules.py` is Tejas's stub; the dashboard and docs are their owners' work.
+
+Run it: `cd backend && uvicorn app.main:app --reload`, then open `/docs`. The database seeds
+itself on boot. Every endpoint works; anything that needs a decision returns 501 until the
+rules engine lands.
 
 ## Quickstart
 - Backend: `cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload`

@@ -29,8 +29,12 @@ Four people. One owner per path. Do not edit another person's path without askin
 - `backend/app/merchants.py` — merchant registry
 - `backend/app/audit.py` — hash chain
 - `backend/app/paypal.py` — Orders v2 client
+- `backend/app/store.py` — mandates, quotes, purchases, `get_spent`
+- `backend/app/main.py` — every route in the contract
+- `backend/app/agent.py` — Gemini with mock fallback
 - `backend/seed.py` — 12 products, 4 merchants
-- 32 tests
+- `render.yaml`, `.github/workflows/test.yml`
+- 54 tests
 
 ## The build order that cannot change
 
