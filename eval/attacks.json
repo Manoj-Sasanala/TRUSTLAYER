@@ -31,7 +31,7 @@
           "price": "24.99",
           "currency": "USD",
           "merchant_id": "m_101",
-          "signature": "..."
+          "signature":  "a4a8689ca8a03f37f6b6f975c500b5624f527a38b51af1b154be7836998846d3"
         }
       },
       "merchants": {
