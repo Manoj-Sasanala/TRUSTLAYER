@@ -1,6 +1,6 @@
 # eval/ — the proof judges believe
 
-Owner: Naathash. Branch: `rules/engine`.
+`attacks.json` is owned by Adarsh (`docs/proof`). `run.py` is owned by Tejas (`rules/engine`).
 
 This folder is what turns "we wrote rules" into "we tested 40 attacks and 40 were blocked".
 

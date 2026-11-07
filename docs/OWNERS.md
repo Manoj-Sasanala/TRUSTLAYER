@@ -1,14 +1,13 @@
 # Who builds what
 
-One owner per path. Do not edit another person's path without asking.
+Four people. One owner per path. Do not edit another person's path without asking.
 
 | Person | Branch | Owns | Deadline | Done means |
 |---|---|---|---|---|
-| Manoj | `main` | `backend/app/main.py`, `store.py`, `paypal.py`, `db.py`, `catalog.py`, deploy | Day 5 | `$0.01` capture works, API live |
-| Naathash | `rules/engine` | `backend/app/rules.py`, `backend/tests/test_rules.py`, `eval/` | Day 3 | 14 tests pass, 40/40 attacks blocked |
-| Tejas | `agent/gemini` | `backend/app/agent.py`, `backend/tests/test_agent.py` | Day 3 | mock fallback works, injection resisted |
+| Manoj | `main` | `backend/app/main.py`, `store.py`, `paypal.py`, `db.py`, `catalog.py`, `agent.py`, deploy | Day 5 | `$0.01` capture works, API live |
+| Tejas | `rules/engine` | `backend/app/rules.py`, `backend/tests/test_rules.py`, `eval/run.py`, `ml/` | Day 3 | 14 tests pass, 40/40 blocked |
 | Deepika | `ui/dashboard` | `frontend/` | Day 4 | 4 panels, AG Grid, attack buttons |
-| Adarsh | `docs/proof` | `README.md`, `docs/`, video, Devpost | Day 6 | video uploaded, README complete |
+| Adarsh | `docs/proof` | `eval/attacks.json`, `README.md`, `docs/`, video, Devpost | Day 6 | video uploaded, README complete |
 
 ## Rules for everyone
 
@@ -33,10 +32,14 @@ One owner per path. Do not edit another person's path without asking.
 - `backend/seed.py` — 12 products, 4 merchants
 - 32 tests
 
-## What is a stub (fill it in)
+## The build order that cannot change
 
-- `backend/app/rules.py` — Naathash
-- `backend/app/store.py` — Manoj
-- `backend/app/agent.py` — Tejas
-- `frontend/` — Deepika
-- `eval/` — Naathash
+1. PayPal `$0.01` capture (Manoj) — without this there is no project.
+2. Rules engine + 14 tests (Tejas).
+3. Purchase API (Manoj).
+4. Attack corpus 40/40 (Adarsh data, Tejas runner).
+5. Dashboard (Deepika).
+6. Agent (Manoj).
+7. Deploy + video (Manoj + Adarsh).
+
+Anything not on this list is cut.

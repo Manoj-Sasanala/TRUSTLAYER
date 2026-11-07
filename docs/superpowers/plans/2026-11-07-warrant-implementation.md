@@ -93,7 +93,7 @@ Responsibilities: `rules.py` is pure and testable without a server. `store.py` o
 | Day | Date | Deliverable | Owner |
 |---|---|---|---|
 | 1 | Nov 7 | T1–T5: skeleton, contract, DB+seed, PayPal $0.01, audit chain | Manoj |
-| 2 | Nov 8 | T6–T9: rules + tests, mandates, purchase API, attack corpus | Naathash (+Manoj) |
+| 2 | Nov 8 | T6–T9: rules + tests, mandates, purchase API, attack corpus | Tejas (rules) + Adarsh (attacks) + Manoj (API) |
 | 3 | Nov 9 | T10–T12: agent, full path, approve/reject/capture | Tejas (+Manoj) |
 | 4 | Nov 10 | T13–T15: dashboard, AG Grid feed, attack lab — **freeze 22:00** | Deepika |
 | 5 | Nov 11 | T16–T17: deploy, README, video take 1 | Adarsh + Manoj |
