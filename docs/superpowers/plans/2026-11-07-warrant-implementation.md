@@ -94,7 +94,7 @@ Responsibilities: `rules.py` is pure and testable without a server. `store.py` o
 |---|---|---|---|
 | 1 | Nov 7 | T1–T5: skeleton, contract, DB+seed, PayPal $0.01, audit chain | Manoj |
 | 2 | Nov 8 | T6–T9: rules + tests, mandates, purchase API, attack corpus | Tejas (rules) + Adarsh (attacks) + Manoj (API) |
-| 3 | Nov 9 | T10–T12: agent, full path, approve/reject/capture | Tejas (+Manoj) |
+| 3 | Nov 9 | T10-T12: agent, full path, approve/reject/capture | Manoj |
 | 4 | Nov 10 | T13–T15: dashboard, AG Grid feed, attack lab — **freeze 22:00** | Deepika |
 | 5 | Nov 11 | T16–T17: deploy, README, video take 1 | Adarsh + Manoj |
 | 6 | Nov 12 | Record, edit, Devpost, **submit by 21:00 IST** | Adarsh + Manoj |
@@ -512,7 +512,7 @@ Injection phrases (case-insensitive, first match wins): `ignore previous instruc
 - [ ] **Step 2:** Retrain without `StandardScaler`. Save `rf_model.pkl`, `feature_columns.pkl`, `threshold.json`.
 - [ ] **Step 3:** Write the 5 tests: deterministic, larger amount scores higher, new merchant scores higher, score in `[0,1]`, missing field raises `ValueError`.
 - [ ] **Step 4:** Run `pytest ml/tests -q`. Expected: 5 passed.
-- [ ] **Step 5:** Commit on branch `ml/retrain-noscaler`, open a PR. Never push to `main`.
+- [ ] **Step 5:** Commit on branch `rules/engine`, open a PR. Never push to `main`.
 
 ---
 

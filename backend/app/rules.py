@@ -1,4 +1,4 @@
-"""R1-R12: the deterministic decision engine. Owner: Naathash. Branch: rules/engine.
+"""R1-R12: the deterministic decision engine. Owner: Tejas. Branch: rules/engine.
 
 Pure functions only. No database, no network, no file reads, no clock.
 Everything it needs arrives in the three arguments. Contract: docs/CONTRACT.md
@@ -16,4 +16,4 @@ def evaluate(intent: dict, mandate: dict, state: dict) -> dict:
     - Read time only from state["now"].
     - risk is passed through; it never changes the decision.
     """
-    raise NotImplementedError("Naathash: implement R1-R12, see docs/CONTRACT.md")
+    raise NotImplementedError("Tejas: implement R1-R12, see docs/CONTRACT.md")

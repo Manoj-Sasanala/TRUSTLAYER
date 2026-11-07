@@ -1,4 +1,4 @@
-"""The agent. Owner: Tejas. Branch: agent/gemini.
+"""The agent. Owner: Manoj. Branch: main.
 
 The model may only CHOOSE an item that already exists in the catalog.
 It never sets the amount, the merchant, or the payee.
@@ -17,9 +17,9 @@ def propose(user_request: str, catalog: list[dict], mandate: dict) -> dict:
     On any error, timeout, or invalid JSON, call mock_propose instead.
     Never raise to the caller except NoMatchError.
     """
-    raise NotImplementedError("Tejas: implement Gemini + mock fallback")
+    raise NotImplementedError("Manoj: implement Gemini + mock fallback")
 
 
 def mock_propose(user_request: str, catalog: list[dict]) -> dict:
     """Deterministic fallback: substring match on the user request, cheapest item wins."""
-    raise NotImplementedError("Tejas: implement the mock matcher")
+    raise NotImplementedError("Manoj: implement the mock matcher")
