@@ -6,6 +6,15 @@ User sets a scoped mandate (budget, per-txn cap, allowed merchants, expiry). Age
 
 `LLM proposes, code disposes.`
 
+## Start here (team)
+
+1. Read `docs/CONTRACT.md` — frozen payloads, the twelve rules, the API.
+2. Find your path and branch in `docs/OWNERS.md`.
+3. Open your assigned issue in [Issues](https://github.com/Manoj-Sasanala/TRUSTLAYER/issues).
+4. Copy your block from `docs/AGENT_PROMPTS.md` into your coding agent.
+
+Never push to `main`. Push your branch, open a PR, Manoj merges.
+
 ## Status
 Day 1: backend foundations built and tested (32 tests). The rules engine, agent and dashboard are stubs their owners fill in.
 
