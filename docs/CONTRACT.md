@@ -106,7 +106,7 @@ Base `http://localhost:8000`.
 | POST | `/mandates` | Mandate | 201, stored mandate |
 | GET | `/mandates/{id}` | — | Mandate |
 | POST | `/purchases/request` | `{"user_request": "...", "mandate_id": "..."}` | 201, `{purchase_id, intent, decision, approval_url}` |
-| POST | `/purchases` | `{"intent": PurchaseIntent, "idempotency_key": "..."}` | 201, `{purchase_id, decision}` |
+| POST | `/purchases` | `{"intent": PurchaseIntent, "idempotency_key": "..."}` | 201, `{purchase_id, decision, approval_url}` |
 | POST | `/purchases/{id}/evaluate` | — | `{decision}` |
 | GET | `/purchases` | — | list, newest first |
 | POST | `/purchases/{id}/approve` | — | `{status}` |

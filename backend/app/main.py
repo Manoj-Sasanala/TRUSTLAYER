@@ -4,6 +4,7 @@ from uuid import uuid4
 
 import httpx
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app import agent, audit, catalog, merchants, paypal, store
 from app.db import init_db
@@ -35,6 +36,15 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="WARRANT", lifespan=lifespan)
+
+# shortcut: wildcard CORS so the local dashboard and the Vercel URL both work.
+# Tighten to the real origins before this ever holds real money.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def _now() -> str:

@@ -152,6 +152,18 @@ def test_unknown_mandate_is_404(client):
     assert client.post("/purchases", json={"intent": INTENT}).status_code == 404
 
 
+def test_cors_allows_the_dashboard(client):
+    response = client.options(
+        "/catalog",
+        headers={
+            "Origin": "http://localhost:5173",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "*"
+
+
 def test_audit_chain_verifies_after_decisions(client, approve):
     client.post("/mandates", json=MANDATE)
     client.post("/purchases", json={"intent": INTENT})
