@@ -7,14 +7,18 @@ User sets a scoped mandate (budget, per-txn cap, allowed merchants, expiry). Age
 `LLM proposes, code disposes.`
 
 ## Status
-Day 0 scaffold for PayPal AI Hackathon (deadline Nov 12 2026 2pm PT).
+Day 1: backend foundations built and tested (32 tests). The rules engine, agent and dashboard are stubs their owners fill in.
 
 ## Quickstart
-- Backend: `backend/` FastAPI (coming)
-- Frontend: `frontend/` React + Tailwind (coming)
-- Policy engine: `backend/app/policy/` R1-R12 (coming)
+- Backend: `cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload`
+- Frontend: `frontend/` React + Vite + AG Grid — see `frontend/README.md`
+- Rules engine: `backend/app/rules.py` R1-R12 — see `docs/CONTRACT.md`
 
-See `docs/PRD.md` for full spec.
+## Team docs
+- `docs/CONTRACT.md` — frozen payloads, rules, API. Read this first.
+- `docs/OWNERS.md` — who owns which path, branch and deadline.
+- `docs/AGENT_PROMPTS.md` — copy-paste prompt for each person's coding agent.
+- `docs/superpowers/plans/` — the full 18-task plan.
 
 ## PayPal integration (sandbox)
 - Orders v2: create order, buyer approve, capture, verify amount/currency/orderID
