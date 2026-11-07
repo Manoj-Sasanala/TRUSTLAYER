@@ -51,10 +51,13 @@ Always a string with exactly two decimals: `"24.99"`.
   "seen_keys": ["key-1"],
   "catalog": {"p_204": {"price": "24.99", "currency": "USD", "merchant_id": "m_101", "signature": "..."}},
   "merchants": {"m_101": {"payee": "pay@voltandwire.test", "approved": true}},
+  "quote": {"quote_id": "q_331", "item_id": "p_204", "merchant_id": "m_101", "amount": "24.99", "currency": "USD", "payee": "pay@voltandwire.test"},
   "now": "2026-11-08T10:00:00Z",
   "capture": null
 }
 ```
+
+`quote` is the locked quote captured when the purchase was created. R5 compares the intent's amount to `quote.amount`. R6 compares `quote.amount` to the signed catalog price. R7 compares `quote.payee` to the merchant registry's current payee.
 
 ## Decision — the only thing the rules engine returns
 

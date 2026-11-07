@@ -69,3 +69,13 @@ class Decision(StrictModel):
     risk: float = Field(ge=0.0, le=1.0)
     quote: dict
     explanation: str
+
+
+class PurchaseCreate(StrictModel):
+    intent: PurchaseIntent
+    idempotency_key: str | None = None
+
+
+class AgentRequest(StrictModel):
+    user_request: str = Field(min_length=1)
+    mandate_id: str

@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: warrant-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      - key: PAYPAL_ENV
+        value: sandbox
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: AGENT_MODE
+        value: mock
+      - key: CATALOG_SIGNING_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: warrant.db
+# shortcut: free tier has no disk, so SQLite resets on each deploy. Seed runs on boot.
+# Upgrade to a paid plan with a disk (or Postgres) before real money.
