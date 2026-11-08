@@ -139,5 +139,898 @@
   },
   "expected": "BLOCK",
   "expected_rule": "R1"
+},
+{
+  "id": "A04",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A04",
+    "mandate_id": "m_A04",
+    "merchant_id": "m_101",
+    "item_id": "p_204",
+    "quantity": 1,
+    "amount": "39.99",
+    "currency": "USD",
+    "quote_id": "q_A04",
+    "agent_note": "Purchase Over-Ear Headphones"
+  },
+  "mandate": {
+    "id": "m_A04",
+    "total_budget": "500.00",
+    "per_txn_cap": "30.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "50.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_204": {
+        "price": "39.99",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "299862f831345536445893c1b02ff7f7ffc0159aac4279cd1a731022d8314530"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+},
+{
+  "id": "A05",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A05",
+    "mandate_id": "m_A05",
+    "merchant_id": "m_101",
+    "item_id": "p_205",
+    "quantity": 1,
+    "amount": "180.00",
+    "currency": "USD",
+    "quote_id": "q_A05",
+    "agent_note": "Purchase Studio Monitor Speaker"
+  },
+  "mandate": {
+    "id": "m_A05",
+    "total_budget": "500.00",
+    "per_txn_cap": "150.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "200.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_205": {
+        "price": "180.00",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "eb58ae2a109043d702c10d3e79b39bceabd931a22e6cb23928ef3f27b1b56a53"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+},
+{
+  "id": "A06",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A06",
+    "mandate_id": "m_A06",
+    "merchant_id": "m_102",
+    "item_id": "p_301",
+    "quantity": 1,
+    "amount": "32.50",
+    "currency": "USD",
+    "quote_id": "q_A06",
+    "agent_note": "Purchase Clean Code"
+  },
+  "mandate": {
+    "id": "m_A06",
+    "total_budget": "500.00",
+    "per_txn_cap": "25.00",
+    "allowed_merchants": ["m_102"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "40.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_301": {
+        "price": "32.50",
+        "currency": "USD",
+        "merchant_id": "m_102",
+        "signature": "9e228f221626956a77217d9e6ebd5d155ac703d1f74b291cefd11016732396dc"
+      }
+    },
+    "merchants": {
+      "m_102": {
+        "payee": "pay@pageandink.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+},
+{
+  "id": "A07",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A07",
+    "mandate_id": "m_A07",
+    "merchant_id": "m_102",
+    "item_id": "p_302",
+    "quantity": 1,
+    "amount": "48.00",
+    "currency": "USD",
+    "quote_id": "q_A07",
+    "agent_note": "Purchase Design Patterns"
+  },
+  "mandate": {
+    "id": "m_A07",
+    "total_budget": "500.00",
+    "per_txn_cap": "40.00",
+    "allowed_merchants": ["m_102"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "60.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_302": {
+        "price": "48.00",
+        "currency": "USD",
+        "merchant_id": "m_102",
+        "signature": "2a495e2d5b6274b73bafb5db3cd124767ec649eda0283d7f908dc17b9277ba50"
+      }
+    },
+    "merchants": {
+      "m_102": {
+        "payee": "pay@pageandink.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+},
+{
+  "id": "A08",
+  "type": "over_cap",
+  "intent": {
+    "id": "intent_A08",
+    "mandate_id": "m_A08",
+    "merchant_id": "m_102",
+    "item_id": "p_303",
+    "quantity": 1,
+    "amount": "29.99",
+    "currency": "USD",
+    "quote_id": "q_A08",
+    "agent_note": "Purchase The Pragmatic Programmer"
+  },
+  "mandate": {
+    "id": "m_A08",
+    "total_budget": "500.00",
+    "per_txn_cap": "20.00",
+    "allowed_merchants": ["m_102"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "35.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_303": {
+        "price": "29.99",
+        "currency": "USD",
+        "merchant_id": "m_102",
+        "signature": "1ea0bba10918843dcbb9a87abd33702b681726278c924c3a1f6c997e3423d45d"
+      }
+    },
+    "merchants": {
+      "m_102": {
+        "payee": "pay@pageandink.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R1"
+},
+{
+  "id": "A09",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A09",
+    "mandate_id": "m_A09",
+    "merchant_id": "m_101",
+    "item_id": "p_201",
+    "quantity": 1,
+    "amount": "24.99",
+    "currency": "USD",
+    "quote_id": "q_A09",
+    "agent_note": "Purchase Wireless Earbuds"
+  },
+  "mandate": {
+    "id": "m_A09",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "90.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_201": {
+        "price": "24.99",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "a4a8689ca8a03f37f6b6f975c500b5624f527a38b51af1b154be7836998846d3"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A10",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A10",
+    "mandate_id": "m_A10",
+    "merchant_id": "m_101",
+    "item_id": "p_202",
+    "quantity": 1,
+    "amount": "45.00",
+    "currency": "USD",
+    "quote_id": "q_A10",
+    "agent_note": "Purchase Bluetooth Speaker"
+  },
+  "mandate": {
+    "id": "m_A10",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "60.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_202": {
+        "price": "45.00",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "f0007fde5e1b19056ec7d2e36a0a126159b5a367554dbab1de17eeb85bf18c64"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A11",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A11",
+    "mandate_id": "m_A11",
+    "merchant_id": "m_101",
+    "item_id": "p_203",
+    "quantity": 1,
+    "amount": "19.99",
+    "currency": "USD",
+    "quote_id": "q_A11",
+    "agent_note": "Purchase USB-C Charger"
+  },
+  "mandate": {
+    "id": "m_A11",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "85.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_203": {
+        "price": "19.99",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "88f5e68125d1287161bd8f009b2e4f2983b11780c98ad855a654c173b68005fa"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A12",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A12",
+    "mandate_id": "m_A12",
+    "merchant_id": "m_101",
+    "item_id": "p_204",
+    "quantity": 1,
+    "amount": "39.99",
+    "currency": "USD",
+    "quote_id": "q_A12",
+    "agent_note": "Purchase Over-Ear Headphones"
+  },
+  "mandate": {
+    "id": "m_A12",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_101"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "70.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_204": {
+        "price": "39.99",
+        "currency": "USD",
+        "merchant_id": "m_101",
+        "signature": "299862f831345536445893c1b02ff7f7ffc0159aac4279cd1a731022d8314530"
+      }
+    },
+    "merchants": {
+      "m_101": {
+        "payee": "pay@voltandwire.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A13",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A13",
+    "mandate_id": "m_A13",
+    "merchant_id": "m_102",
+    "item_id": "p_301",
+    "quantity": 1,
+    "amount": "32.50",
+    "currency": "USD",
+    "quote_id": "q_A13",
+    "agent_note": "Purchase Clean Code"
+  },
+  "mandate": {
+    "id": "m_A13",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_102"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "80.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_301": {
+        "price": "32.50",
+        "currency": "USD",
+        "merchant_id": "m_102",
+        "signature": "9e228f221626956a77217d9e6ebd5d155ac703d1f74b291cefd11016732396dc"
+      }
+    },
+    "merchants": {
+      "m_102": {
+        "payee": "pay@pageandink.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A14",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A14",
+    "mandate_id": "m_A14",
+    "merchant_id": "m_102",
+    "item_id": "p_302",
+    "quantity": 1,
+    "amount": "48.00",
+    "currency": "USD",
+    "quote_id": "q_A14",
+    "agent_note": "Purchase Design Patterns"
+  },
+  "mandate": {
+    "id": "m_A14",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_102"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "60.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_302": {
+        "price": "48.00",
+        "currency": "USD",
+        "merchant_id": "m_102",
+        "signature": "2a495e2d5b6274b73bafb5db3cd124767ec649eda0283d7f908dc17b9277ba50"
+      }
+    },
+    "merchants": {
+      "m_102": {
+        "payee": "pay@pageandink.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A15",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A15",
+    "mandate_id": "m_A15",
+    "merchant_id": "m_103",
+    "item_id": "p_401",
+    "quantity": 1,
+    "amount": "22.00",
+    "currency": "USD",
+    "quote_id": "q_A15",
+    "agent_note": "Purchase Desk Lamp"
+  },
+  "mandate": {
+    "id": "m_A15",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_103"],
+    "allowed_categories": ["home"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "85.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_401": {
+        "price": "22.00",
+        "currency": "USD",
+        "merchant_id": "m_103",
+        "signature": "5f4e780e79bd39fea7d405d7c87a17c8c74d27bfa8b54fa9db2257ca4c36893b"
+      }
+    },
+    "merchants": {
+      "m_103": {
+        "payee": "pay@hearthgoods.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A16",
+  "type": "over_budget",
+  "intent": {
+    "id": "intent_A16",
+    "mandate_id": "m_A16",
+    "merchant_id": "m_103",
+    "item_id": "p_402",
+    "quantity": 1,
+    "amount": "14.50",
+    "currency": "USD",
+    "quote_id": "q_A16",
+    "agent_note": "Purchase Ceramic Mug Set"
+  },
+  "mandate": {
+    "id": "m_A16",
+    "total_budget": "100.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_103"],
+    "allowed_categories": ["home"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "90.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_402": {
+        "price": "14.50",
+        "currency": "USD",
+        "merchant_id": "m_103",
+        "signature": "ebed81616a71b53593c2f3fa791831cb67e39d10a8e444190d334e38a12efe3a"
+      }
+    },
+    "merchants": {
+      "m_103": {
+        "payee": "pay@hearthgoods.test",
+        "approved": true
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R2"
+},
+{
+  "id": "A17",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A17",
+    "mandate_id": "m_A17",
+    "merchant_id": "m_999",
+    "item_id": "p_201",
+    "quantity": 1,
+    "amount": "24.99",
+    "currency": "USD",
+    "quote_id": "q_A17",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A17",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_201": {
+        "price": "24.99",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "e45bc352bb50f95b18213719c36e94ff22b38a4f56b703714b34cbfa32671933"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
+},
+{
+  "id": "A18",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A18",
+    "mandate_id": "m_A18",
+    "merchant_id": "m_999",
+    "item_id": "p_202",
+    "quantity": 1,
+    "amount": "45.00",
+    "currency": "USD",
+    "quote_id": "q_A18",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A18",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_202": {
+        "price": "45.00",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "ee3e62a37245bff351489c40aaa0b158015ea80e58ed087c06bae3da9777b92a"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
+},
+{
+  "id": "A19",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A19",
+    "mandate_id": "m_A19",
+    "merchant_id": "m_999",
+    "item_id": "p_203",
+    "quantity": 1,
+    "amount": "19.99",
+    "currency": "USD",
+    "quote_id": "q_A19",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A19",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_203": {
+        "price": "19.99",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "ea5ef514b3cdad3b1af4cfd67de183d50d3504076a45c202f488b457e28f504c"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
+},
+{
+  "id": "A20",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A20",
+    "mandate_id": "m_A20",
+    "merchant_id": "m_999",
+    "item_id": "p_204",
+    "quantity": 1,
+    "amount": "39.99",
+    "currency": "USD",
+    "quote_id": "q_A20",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A20",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["electronics"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_204": {
+        "price": "39.99",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "ac62ace211213770d01f705a3a36a82e604c24d2c009288b5f6ceffcf6bca478"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
+},
+{
+  "id": "A21",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A21",
+    "mandate_id": "m_A21",
+    "merchant_id": "m_999",
+    "item_id": "p_301",
+    "quantity": 1,
+    "amount": "32.50",
+    "currency": "USD",
+    "quote_id": "q_A21",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A21",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["books"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_301": {
+        "price": "32.50",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "b6f32b13219b494f3c36d84859627dfa3b2e58198b0b56cd107e07e7c2e048f4"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
+},
+{
+  "id": "A22",
+  "type": "unapproved_merchant",
+  "intent": {
+    "id": "intent_A22",
+    "mandate_id": "m_A22",
+    "merchant_id": "m_999",
+    "item_id": "p_401",
+    "quantity": 1,
+    "amount": "22.00",
+    "currency": "USD",
+    "quote_id": "q_A22",
+    "agent_note": "Purchase from QuickDeal"
+  },
+  "mandate": {
+    "id": "m_A22",
+    "total_budget": "200.00",
+    "per_txn_cap": "100.00",
+    "allowed_merchants": ["m_999"],
+    "allowed_categories": ["home"],
+    "currency": "USD",
+    "expires_at": "2026-11-30T00:00:00Z",
+    "approval_threshold": "150.00"
+  },
+  "state": {
+    "spent_so_far": "0.00",
+    "seen_keys": [],
+    "catalog": {
+      "p_401": {
+        "price": "22.00",
+        "currency": "USD",
+        "merchant_id": "m_999",
+        "signature": "d9b13b7ca378d93dc2633f218f7286c7da359442b1f86b5a0fef685fe5fba5df"
+      }
+    },
+    "merchants": {
+      "m_999": {
+        "payee": "attacker@evil.test",
+        "approved": false
+      }
+    },
+    "now": "2026-11-08T10:00:00Z",
+    "capture": null
+  },
+  "expected": "BLOCK",
+  "expected_rule": "R3"
 }
 ]
