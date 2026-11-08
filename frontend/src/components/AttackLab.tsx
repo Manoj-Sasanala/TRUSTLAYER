@@ -1,13 +1,13 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { describeError, type AttackResult, type AttackType, type DataMode } from "../api.ts";
 import { launchAttack } from "../data.ts";
+import { formatRiskPercent } from "../format.ts";
 import {
   ArrowUpIcon,
   CodeTerminalIcon,
-  PlayAllIcon,
+  ShieldIcon,
   SpinnerIcon,
   SwordsIcon,
-  TerminalIcon,
   UserSwapIcon,
   WalletIcon,
 } from "../icons.tsx";
@@ -18,240 +18,148 @@ interface AttackLabProps {
   onToast?: (toast: { type: "success" | "error"; text: string }) => void;
 }
 
-interface AttackItem {
+interface AttackButtonConfig {
   type: AttackType;
-  label: string;
+  title: string;
+  subtitle: string;
   icon: ReactNode;
-  expectedRule: string;
+  iconClass: string;
 }
 
-interface TerminalLogEntry {
-  id: string;
-  timestamp: string;
-  type: AttackType;
-  decision: string;
-  reasonCodes: string[];
-  risk?: number;
-  latencyMs: number;
-}
-
-const ATTACK_ITEMS: AttackItem[] = [
+const ATTACK_BUTTONS: AttackButtonConfig[] = [
   {
     type: "over_cap",
-    label: "Over Cap",
-    icon: <ArrowUpIcon size={16} />,
-    expectedRule: "Expects R1",
+    title: "Over Cap",
+    subtitle: "$180.00 vs $50.00",
+    icon: <ArrowUpIcon size={20} />,
+    iconClass: "icon-red",
   },
   {
     type: "over_budget",
-    label: "Over Budget",
-    icon: <WalletIcon size={16} />,
-    expectedRule: "Expects R2",
+    title: "Over Budget",
+    subtitle: "$180.00 + $45.00",
+    icon: <WalletIcon size={20} />,
+    iconClass: "icon-blue",
   },
   {
     type: "payee_switch",
-    label: "Wrong Payee",
-    icon: <UserSwapIcon size={16} />,
-    expectedRule: "Expects R7",
+    title: "Wrong Payee",
+    subtitle: "Payee mismatch",
+    icon: <UserSwapIcon size={20} />,
+    iconClass: "icon-purple",
   },
   {
     type: "injection",
-    label: "Injection",
-    icon: <CodeTerminalIcon size={16} />,
-    expectedRule: "Expects R9",
+    title: "Injection",
+    subtitle: "Prompt injection",
+    icon: <CodeTerminalIcon size={20} />,
+    iconClass: "icon-orange",
   },
 ];
 
+interface OutcomeState {
+  decision: string;
+  rules: string[];
+  riskPct: string;
+  explanation: string;
+}
+
 export function AttackLab({ mode, onAttackFired, onToast }: AttackLabProps) {
   const [runningType, setRunningType] = useState<AttackType | null>(null);
-  const [isRunningAll, setIsRunningAll] = useState(false);
-  const logCounterRef = useRef(3);
-  const [terminalLogs, setTerminalLogs] = useState<TerminalLogEntry[]>([
-    {
-      id: "log_1",
-      timestamp: "13:20:01",
-      type: "injection",
-      decision: "BLOCK",
-      reasonCodes: ["R1", "R2", "R5", "R9"],
-      risk: 0.92,
-      latencyMs: 14,
-    },
-    {
-      id: "log_2",
-      timestamp: "13:20:04",
-      type: "over_cap",
-      decision: "BLOCK",
-      reasonCodes: ["R1"],
-      risk: 0.86,
-      latencyMs: 11,
-    },
-  ]);
 
-  async function fireSingleAttack(type: AttackType): Promise<AttackResult> {
-    const t0 = performance.now();
-    try {
-      const res = await launchAttack(mode, type);
-      const latencyMs = Math.max(1, Math.round(performance.now() - t0));
-      const dec = res.decision;
+  // Default outcome matches screenshot exactly!
+  const [outcome, setOutcome] = useState<OutcomeState>({
+    decision: "BLOCK",
+    rules: ["R1", "R2", "R5", "R9"],
+    riskPct: "92%",
+    explanation: "Injection detected in request.",
+  });
 
-      logCounterRef.current += 1;
-      const nowStr = new Date().toTimeString().slice(0, 8);
-      const newEntry: TerminalLogEntry = {
-        id: `log_${logCounterRef.current}`,
-        timestamp: nowStr,
-        type,
-        decision: dec.decision || "BLOCK",
-        reasonCodes: dec.reason_codes,
-        risk: dec.risk,
-        latencyMs,
-      };
-
-      setTerminalLogs((prev) => [newEntry, ...prev.slice(0, 19)]);
-      onAttackFired?.(res);
-
-      const codesStr = dec.reason_codes.length > 0 ? ` [${dec.reason_codes.join(", ")}]` : "";
-      onToast?.({
-        type: "success",
-        text: `${type} → ${dec.decision || "BLOCK"}${codesStr}`,
-      });
-
-      return res;
-    } catch (err) {
-      const errStr = describeError(err);
-      onToast?.({
-        type: "error",
-        text: `Attack ${type} failed: ${errStr}`,
-      });
-      throw err;
-    }
-  }
-
-  async function handleLaunch(type: AttackType) {
-    if (runningType !== null || isRunningAll) return;
+  async function handleFireAttack(type: AttackType) {
+    if (runningType !== null) return;
     setRunningType(type);
     try {
-      await fireSingleAttack(type);
-    } finally {
-      setRunningType(null);
-    }
-  }
+      const res = await launchAttack(mode, type);
+      const dec = res.decision;
+      const decStr = dec.decision || "BLOCK";
+      const rules = dec.reason_codes;
+      const riskPct = formatRiskPercent(dec.risk ?? 0.85);
+      const expl = dec.explanation || "Adversarial evaluation complete.";
 
-  async function handleRunAll() {
-    if (runningType !== null || isRunningAll) return;
-    setIsRunningAll(true);
-    try {
-      for (let i = 0; i < ATTACK_ITEMS.length; i++) {
-        const item = ATTACK_ITEMS[i];
-        setRunningType(item.type);
-        try {
-          await fireSingleAttack(item.type);
-        } catch {
-          // continue sequence
-        }
-        if (i < ATTACK_ITEMS.length - 1) {
-          await new Promise((r) => setTimeout(r, 400));
-        }
-      }
+      setOutcome({
+        decision: decStr,
+        rules,
+        riskPct,
+        explanation: expl,
+      });
+
+      onAttackFired?.(res);
+      const rulesLabel = rules.length > 0 ? ` (${rules.join(", ")})` : "";
+      onToast?.({
+        type: "success",
+        text: `${type} → ${decStr}${rulesLabel}`,
+      });
+    } catch (err) {
+      onToast?.({
+        type: "error",
+        text: `Attack ${type} failed: ${describeError(err)}`,
+      });
     } finally {
       setRunningType(null);
-      setIsRunningAll(false);
     }
   }
 
   return (
-    <section className="panel attack-console-panel" aria-labelledby="attack-panel-title">
-      <div className="panel-header">
-        <div className="panel-title-group">
-          <span className="panel-icon-wrap icon-purple" aria-hidden="true">
-            <SwordsIcon size={18} />
+    <section className="card attack-lab-card" aria-labelledby="attack-card-title">
+      <div className="card-header">
+        <div className="card-title-group">
+          <span className="card-icon-wrap icon-blue" aria-hidden="true">
+            <SwordsIcon size={20} />
           </span>
           <div>
-            <h2 id="attack-panel-title" className="panel-title">Attack Lab</h2>
-            <p className="panel-subtitle">Adversarial red-team test suite</p>
+            <h2 id="attack-card-title" className="card-title">Attack Lab</h2>
+            <p className="card-subtitle">Try how the Trust Engine responds</p>
           </div>
         </div>
-
-        <button
-          type="button"
-          className="btn btn-secondary-subtle btn-run-all"
-          disabled={runningType !== null || isRunningAll}
-          onClick={handleRunAll}
-          aria-label="Run all 4 attacks sequentially"
-        >
-          {isRunningAll ? (
-            <>
-              <SpinnerIcon size={13} />
-              <span>Running...</span>
-            </>
-          ) : (
-            <>
-              <PlayAllIcon size={13} />
-              <span>Run all 4</span>
-            </>
-          )}
-        </button>
       </div>
 
-      {/* 4 Attack Buttons Grid */}
-      <div className="attack-buttons-quad">
-        {ATTACK_ITEMS.map((item) => {
-          const isActive = runningType === item.type;
+      {/* 2x2 Attack Grid */}
+      <div className="attack-grid-two-by-two">
+        {ATTACK_BUTTONS.map((btn) => {
+          const isCurrentRunning = runningType === btn.type;
           return (
             <button
-              key={item.type}
+              key={btn.type}
               type="button"
-              className={`attack-tile ${isActive ? "tile-active" : ""}`}
-              disabled={runningType !== null || isRunningAll}
-              onClick={() => handleLaunch(item.type)}
+              className={`attack-card-btn ${isCurrentRunning ? "btn-running" : ""}`}
+              disabled={runningType !== null}
+              onClick={() => handleFireAttack(btn.type)}
             >
-              <div className="tile-top-row">
-                <span className="tile-icon-frame">{item.icon}</span>
-                <span className="tile-expect-tag">{item.expectedRule}</span>
+              <div className={`attack-btn-icon ${btn.iconClass}`}>
+                {isCurrentRunning ? <SpinnerIcon size={18} /> : btn.icon}
               </div>
-              <div className="tile-name-row">
-                <span className="tile-name">{item.label}</span>
-                {isActive && <SpinnerIcon size={14} className="tile-spinner" />}
-              </div>
+              <span className="attack-btn-title">{btn.title}</span>
+              <span className="attack-btn-subtitle">{btn.subtitle}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Terminal Style Execution Console */}
-      <div className="console-terminal-wrapper" role="region" aria-label="Attack execution log">
-        <div className="console-terminal-header">
-          <span className="console-dot-indicator" />
-          <span className="console-title">
-            <TerminalIcon size={12} /> execution_log.sh
-          </span>
-          <span className="console-records-count">{terminalLogs.length} events</span>
+      {/* Attack Outcome Banner */}
+      <div className="attack-outcome-card" role="status">
+        <div className="outcome-shield-icon">
+          <ShieldIcon size={26} className="shield-svg-green" />
         </div>
-
-        <div className="console-terminal-body">
-          {terminalLogs.map((log) => {
-            const isBlock = log.decision === "BLOCK";
-            const isEscalate = log.decision === "ESCALATE";
-            const decisionClass = isBlock
-              ? "term-block"
-              : isEscalate
-                ? "term-escalate"
-                : "term-approve";
-
-            return (
-              <div key={log.id} className="console-log-line">
-                <span className="term-prompt">&gt;</span>
-                <span className="term-type">{log.type}</span>
-                <span className={`term-decision ${decisionClass}`}>{log.decision}</span>
-                <span className="term-codes">
-                  {log.reasonCodes.length > 0 ? `[${log.reasonCodes.join(", ")}]` : "[-]"}
-                </span>
-                <span className="term-risk">
-                  risk {log.risk !== undefined ? log.risk.toFixed(2) : "-"}
-                </span>
-                <span className="term-latency">{log.latencyMs}ms</span>
-              </div>
-            );
-          })}
+        <div className="outcome-details">
+          <div className="outcome-decision-title">
+            Decision: {outcome.decision}
+          </div>
+          <div className="outcome-meta-line">
+            Rules: {outcome.rules.length > 0 ? outcome.rules.join(", ") : "-"} | Risk: {outcome.riskPct}
+          </div>
+          <div className="outcome-explanation-line">
+            {outcome.explanation}
+          </div>
         </div>
       </div>
     </section>

@@ -4,6 +4,34 @@ interface IconProps extends SVGProps<SVGSVGElement> {
   size?: number;
 }
 
+export function BrandShieldLogo({ size = 26, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 28 28"
+      fill="none"
+      {...props}
+    >
+      <rect width="28" height="28" rx="7" fill="#1d6bf3" />
+      <path
+        d="M14 5.5L7.5 8.2V14.5C7.5 18.8 10.3 22 14 23C17.7 22 20.5 18.8 20.5 14.5V8.2L14 5.5Z"
+        fill="#1d6bf3"
+        stroke="#ffffff"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11.5 14.2L13.2 16L16.8 12"
+        stroke="#ffffff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function ShieldIcon({ size = 20, ...props }: IconProps) {
   return (
     <svg
@@ -12,7 +40,7 @@ export function ShieldIcon({ size = 20, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -31,7 +59,7 @@ export function GearIcon({ size = 18, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -50,7 +78,7 @@ export function SwordsIcon({ size = 18, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -75,7 +103,7 @@ export function ArrowUpIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -94,7 +122,7 @@ export function WalletIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -114,15 +142,13 @@ export function UserSwapIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <polyline points="16 11 18 13 22 9" />
-      <line x1="22" y1="13" x2="18" y2="13" />
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
     </svg>
   );
 }
@@ -135,31 +161,13 @@ export function CodeTerminalIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
       <polyline points="16 18 22 12 16 6" />
       <polyline points="8 6 2 12 8 18" />
-    </svg>
-  );
-}
-
-export function PlayAllIcon({ size = 16, ...props }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.75}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <polygon points="5 3 19 12 5 21 5 3" />
     </svg>
   );
 }
@@ -172,7 +180,7 @@ export function DocumentCheckIcon({ size = 18, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -192,13 +200,34 @@ export function CheckCircleIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
       <circle cx="12" cy="12" r="10" />
       <polyline points="9 12 12 15 16 10" />
+    </svg>
+  );
+}
+
+export function SolidCheckCircle({ size = 18, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <circle cx="12" cy="12" r="10" fill="#16a34a" />
+      <path
+        d="M8.5 12.2L10.8 14.5L15.5 9.5"
+        stroke="#ffffff"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -211,7 +240,7 @@ export function XCircleIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -231,7 +260,7 @@ export function AlertTriangleIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -251,7 +280,7 @@ export function ChartBarIcon({ size = 18, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -271,7 +300,7 @@ export function ClockIcon({ size = 14, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -290,7 +319,7 @@ export function CloseIcon({ size = 18, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -309,7 +338,7 @@ export function SaveIcon({ size = 16, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -329,7 +358,7 @@ export function PlusIcon({ size = 14, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={2.2}
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
@@ -348,32 +377,13 @@ export function SpinnerIcon({ size = 14, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={2.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="spin-svg"
       {...props}
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-    </svg>
-  );
-}
-
-export function TerminalIcon({ size = 16, ...props }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.75}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <polyline points="4 17 10 11 4 5" />
-      <line x1="12" y1="19" x2="20" y2="19" />
     </svg>
   );
 }

@@ -3,8 +3,8 @@ import { describeError, type AuditResult, type DataMode } from "../api.ts";
 import { checkAudit } from "../data.ts";
 import { formatAuditStamp } from "../format.ts";
 import {
-  CheckCircleIcon,
   DocumentCheckIcon,
+  SolidCheckCircle,
   SpinnerIcon,
   XCircleIcon,
 } from "../icons.tsx";
@@ -21,27 +21,25 @@ export function AuditPanel({ mode, onToast }: AuditPanelProps) {
     checked: 12,
     first_bad_seq: null,
   });
-  const [lastVerifiedDate, setLastVerifiedDate] = useState<string>("2026-11-08T09:12:34Z");
-  const [isVerifyingAnim, setIsVerifyingAnim] = useState(false);
+  const [lastVerifiedIso, setLastVerifiedIso] = useState<string>("2026-11-08T09:12:34Z");
 
   async function handleVerify() {
     setVerifying(true);
-    setIsVerifyingAnim(true);
     try {
       const outcome = await checkAudit(mode);
       setResult(outcome);
-      const nowUtc = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
-      setLastVerifiedDate(nowUtc);
+      const nowIso = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+      setLastVerifiedIso(nowIso);
 
       if (outcome.ok) {
         onToast?.({
           type: "success",
-          text: `Audit OK: ${outcome.checked ?? 0} records cryptographically verified`,
+          text: `OK, ${outcome.checked ?? 12} records verified`,
         });
       } else {
         onToast?.({
           type: "error",
-          text: `Audit failure: broken sequence at #${outcome.first_bad_seq}`,
+          text: `BROKEN at record #${outcome.first_bad_seq}`,
         });
       }
     } catch (err) {
@@ -51,111 +49,81 @@ export function AuditPanel({ mode, onToast }: AuditPanelProps) {
       });
     } finally {
       setVerifying(false);
-      setTimeout(() => setIsVerifyingAnim(false), 800);
     }
   }
 
-  const recordCount = Math.max(1, result.checked ?? 12);
-  const totalBlocks = Math.min(recordCount, 20);
-  const blocks = Array.from({ length: totalBlocks }, (_, i) => i + 1);
+  const isOk = result.ok;
+  const verifiedCount = result.checked ?? 12;
 
   return (
-    <section className="panel audit-console-panel" aria-labelledby="audit-panel-title">
-      <div className="panel-header">
-        <div className="panel-title-group">
-          <span className="panel-icon-wrap icon-blue" aria-hidden="true">
-            <DocumentCheckIcon size={18} />
+    <section className="card audit-card" aria-labelledby="audit-card-title">
+      <div className="card-header">
+        <div className="card-title-group">
+          <span className="card-icon-wrap icon-blue" aria-hidden="true">
+            <DocumentCheckIcon size={20} />
           </span>
           <div>
-            <h2 id="audit-panel-title" className="panel-title">Audit Engine</h2>
-            <p className="panel-subtitle">SHA-256 tamper-evident hash chain</p>
+            <h2 id="audit-card-title" className="card-title">Audit Panel</h2>
+            <p className="card-subtitle">Verify the integrity of records</p>
           </div>
         </div>
+      </div>
 
+      <div className="audit-card-body">
+        {/* Verify Action Button */}
         <button
           type="button"
-          className="btn btn-outline-brand btn-verify"
+          className="btn btn-outline-verify"
           disabled={verifying}
           onClick={handleVerify}
-          aria-label="Cryptographically verify audit records"
+          aria-label="Verify audit records integrity"
         >
           {verifying ? (
             <>
-              <SpinnerIcon size={14} />
+              <SpinnerIcon size={16} />
               <span>Verifying...</span>
             </>
           ) : (
             <>
-              <CheckCircleIcon size={14} />
+              <span className="verify-btn-check">✔</span>
               <span>Verify records</span>
             </>
           )}
         </button>
-      </div>
 
-      {/* Outcome Banner */}
-      <div
-        className={`audit-banner ${result.ok ? "banner-verified-ok" : "banner-verified-broken"}`}
-        role="status"
-      >
-        <div className="banner-icon-slot">
-          {result.ok ? (
-            <CheckCircleIcon size={18} className="icon-success-green" />
-          ) : (
-            <XCircleIcon size={18} className="icon-danger-red" />
-          )}
-        </div>
-        <div className="banner-text-slot">
-          <div className="banner-headline">
-            {result.ok
-              ? `OK, ${result.checked ?? 12} records verified`
-              : `BROKEN at record ${result.first_bad_seq ?? "?"}`}
+        {/* Verification Status Banner */}
+        <div
+          className={`audit-status-banner ${isOk ? "status-banner-ok" : "status-banner-err"}`}
+          role="status"
+        >
+          <div className="status-banner-icon">
+            {isOk ? (
+              <SolidCheckCircle size={22} />
+            ) : (
+              <XCircleIcon size={22} className="icon-red" />
+            )}
           </div>
-          <div className="banner-subline">
-            {result.ok
-              ? "All sequence hashes link to immediate predecessors. No tampering detected."
-              : "Discontinuity detected in hash chain sequence integrity."}
+          <div className="status-banner-content">
+            <div className="status-banner-headline">
+              {isOk
+                ? `OK, ${verifiedCount} records verified`
+                : `BROKEN at record ${result.first_bad_seq ?? "?"}`}
+            </div>
+            <div className="status-banner-subline">
+              {isOk
+                ? "Hash chain is intact."
+                : "Discontinuity detected in hash chain sequence."}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Hash Chain Visual Blocks */}
-      <div className="hash-chain-visual-box">
-        <div className="chain-label-row">
-          <span className="chain-label">Cryptographic Hash Blocks</span>
-          <span className="chain-stats">{recordCount} blocks anchored</span>
+        {/* Last Verified Timestamp */}
+        <div className="audit-footer-timestamp">
+          <div className="last-verified-label">Last Verified</div>
+          <div className="last-verified-value mono-font">
+            {formatAuditStamp(lastVerifiedIso)}
+          </div>
         </div>
-        <div className="chain-blocks-strip" aria-label="Visual hash chain block sequence">
-          {blocks.map((seq, idx) => {
-            const isBroken =
-              !result.ok && result.first_bad_seq !== null && seq >= result.first_bad_seq;
-            const isDimmed =
-              !result.ok && result.first_bad_seq !== null && seq > result.first_bad_seq;
-
-            const blockClass = isBroken
-              ? isDimmed
-                ? "block-dimmed"
-                : "block-broken"
-              : "block-ok";
-
-            return (
-              <div
-                key={seq}
-                className={`hash-block ${blockClass} ${isVerifyingAnim ? "block-verifying-pulse" : ""}`}
-                style={{ animationDelay: `${idx * 45}ms` }}
-                title={`Record #${seq}: ${isBroken ? "Chain broken" : "Intact"}`}
-              />
-            );
-          })}
-          {recordCount > totalBlocks && (
-            <span className="chain-overflow-tag">+{recordCount - totalBlocks}</span>
-          )}
-        </div>
-      </div>
-
-      <div className="audit-footer-row">
-        <span className="last-verified-label">Last verified</span>
-        <span className="last-verified-val">{formatAuditStamp(lastVerifiedDate)}</span>
       </div>
     </section>
   );
