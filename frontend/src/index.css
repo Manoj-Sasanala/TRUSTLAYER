@@ -1,49 +1,47 @@
 :root {
-  /* Premium Dark Design System */
-  --bg-deep: #0a0b10;
-  --surface: #12131a;
-  --surface-alt: #0e0f15;
-  --surface-header: #161822;
-  --surface-hover: #191b26;
+  /* Crisp Light Design System matching TRUSTLAYER product screen */
+  --bg-app: #f0f4f9;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  
+  --border-card: #e2e8f0;
+  --border-input: #cbd5e1;
+  --border-focus: #1d6bf3;
 
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-active: rgba(255, 255, 255, 0.12);
-  --border-glow: rgba(139, 92, 246, 0.4);
+  --text-title: #0f172a;
+  --text-body: #1e293b;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
 
-  --text-primary: #e8e9f0;
-  --text-muted: #8b8da0;
-  --text-dim: #5c5f73;
+  --brand-blue: #1d6bf3;
+  --brand-blue-hover: #1558d6;
+  --brand-blue-subtle: #eff6ff;
 
-  --brand-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-  --brand-purple: #8b5cf6;
-  --brand-indigo: #6366f1;
+  --green-bg: #f0fdf4;
+  --green-badge: #dcfce7;
+  --green-border: #bbf7d0;
+  --green-text: #15803d;
+  --green-stripe: #22c55e;
 
-  --success: #22c55e;
-  --success-dark: #16a34a;
-  --success-bg: rgba(34, 197, 94, 0.06);
-  --success-border: rgba(34, 197, 94, 0.25);
+  --red-bg: #fef2f2;
+  --red-badge: #fee2e2;
+  --red-border: #fecaca;
+  --red-text: #b91c1c;
+  --red-stripe: #ef4444;
 
-  --danger: #ef4444;
-  --danger-dark: #dc2626;
-  --danger-bg: rgba(239, 68, 68, 0.06);
-  --danger-border: rgba(239, 68, 68, 0.25);
-
-  --warning: #f59e0b;
-  --warning-dark: #d97706;
-  --warning-bg: rgba(245, 158, 11, 0.06);
-  --warning-border: rgba(245, 158, 11, 0.25);
-
-  --radius-panel: 14px;
-  --radius-control: 8px;
-  --radius-badge: 9999px;
+  --amber-bg: #fffbeb;
+  --amber-badge: #fef3c7;
+  --amber-border: #fde68a;
+  --amber-text: #b45309;
+  --amber-stripe: #f59e0b;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   font-family: var(--font-sans);
-  color: var(--text-primary);
-  background-color: var(--bg-deep);
-  color-scheme: dark;
+  color: var(--text-body);
+  background-color: var(--bg-app);
+  color-scheme: light;
 }
 
 *, *::before, *::after {
@@ -53,18 +51,12 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-deep);
-  color: var(--text-primary);
+  background-color: var(--bg-app);
+  color: var(--text-body);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   overflow-x: hidden;
-  /* Subtle radial purple glow top-left + faint 1px CSS grid pattern */
-  background-image:
-    radial-gradient(circle at 8% 8%, rgba(139, 92, 246, 0.14) 0%, transparent 40%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
 }
 
 #root {
@@ -73,31 +65,27 @@ body {
   flex-direction: column;
 }
 
-/* Monospace with tabular numbers */
+/* Monospace font with tabular numbers */
 .mono-font {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
-/* Accessible Focus Ring with Glow */
+/* Keyboard focus ring */
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--brand-purple) !important;
+  outline: 2px solid var(--brand-blue) !important;
   outline-offset: 2px !important;
-  box-shadow: 0 0 12px var(--border-glow) !important;
 }
 
-/* Button hover lift */
+/* Smooth button transitions */
 button {
-  transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  font-family: inherit;
+  transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
 
 button:hover:not(:disabled) {
   transform: translateY(-1px);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
 }

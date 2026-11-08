@@ -1,4 +1,29 @@
-// Unified UTC time formatting: "08 Nov 09:12:34"
+// Unified UTC time formatting for TRUSTLAYER
+
+export function formatTimeHms(value: unknown): string {
+  if (typeof value !== "string" || !value.trim() || value === "-") return "-";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    // If already in HH:mm:ss format
+    if (/^\d{2}:\d{2}:\d{2}$/.test(value.trim())) return value.trim();
+    return value;
+  }
+
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+    timeZone: "UTC",
+  }).formatToParts(date);
+
+  const hour = parts.find((p) => p.type === "hour")?.value ?? "00";
+  const minute = parts.find((p) => p.type === "minute")?.value ?? "00";
+  const second = parts.find((p) => p.type === "second")?.value ?? "00";
+
+  return `${hour}:${minute}:${second}`;
+}
+
 export function formatUtcDateTime(value: unknown): string {
   if (typeof value !== "string" || !value.trim() || value === "-") return "-";
   const date = new Date(value);
@@ -23,17 +48,25 @@ export function formatUtcDateTime(value: unknown): string {
   return `${day} ${month} ${hour}:${minute}:${second}`;
 }
 
-export function formatStamp(value: unknown): string {
-  return formatUtcDateTime(value);
-}
-
-export function formatTimeOnly(value: unknown): string {
-  return formatUtcDateTime(value);
-}
-
 export function formatAuditStamp(value: unknown): string {
-  const formatted = formatUtcDateTime(value);
-  return formatted === "-" ? "-" : `${formatted} UTC`;
+  if (typeof value !== "string" || !value.trim() || value === "-") return "-";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  // Format: "Nov 8, 2026, 09:12:34 AM (UTC)"
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const m = monthNames[date.getUTCMonth()];
+  const d = date.getUTCDate();
+  const y = date.getUTCFullYear();
+  let hr = date.getUTCHours();
+  const ampm = hr >= 12 ? "PM" : "AM";
+  hr = hr % 12;
+  if (hr === 0) hr = 12;
+  const hrStr = String(hr).padStart(2, "0");
+  const minStr = String(date.getUTCMinutes()).padStart(2, "0");
+  const secStr = String(date.getUTCSeconds()).padStart(2, "0");
+
+  return `${m} ${d}, ${y}, ${hrStr}:${minStr}:${secStr} ${ampm} (UTC)`;
 }
 
 export function formatRelativeTime(value: unknown): string {
@@ -52,7 +85,16 @@ export function formatRelativeTime(value: unknown): string {
   return `${diffDay}d ago`;
 }
 
-// Raw 0.00-1.00 risk formatter, no percent conversion
+// Percent risk formatter: 0.12 -> "12%"
+export function formatRiskPercent(value: number | null | undefined): string {
+  if (value === null || value === undefined || typeof value !== "number" || !Number.isFinite(value)) {
+    return "-";
+  }
+  const pct = Math.round(value * 100);
+  return `${pct}%`;
+}
+
+// Raw 0.00-1.00 risk score
 export function formatRiskScore(value: number | null | undefined): string {
   if (value === null || value === undefined || typeof value !== "number" || !Number.isFinite(value)) {
     return "-";
