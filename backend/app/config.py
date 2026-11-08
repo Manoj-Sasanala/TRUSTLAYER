@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     paypal_client_secret: str = ""
     catalog_signing_key: str = "dev-only-change-me"
     gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.1-flash-lite"
     agent_mode: str = "mock"
     database_path: str = "warrant.db"
 

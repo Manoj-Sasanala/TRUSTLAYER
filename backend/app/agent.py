@@ -15,7 +15,7 @@ from app.config import settings
 
 GEMINI_URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
-    "gemini-2.0-flash:generateContent"
+    "{model}:generateContent"
 )
 
 SYSTEM = (
@@ -85,7 +85,10 @@ def _gemini(user_request: str, catalog: list[dict], mandate: dict) -> dict:
         "generationConfig": {"responseMimeType": "application/json", "temperature": 0},
     }
     response = httpx.post(
-        GEMINI_URL, params={"key": settings.gemini_api_key}, json=payload, timeout=20
+        GEMINI_URL.format(model=settings.gemini_model),
+        params={"key": settings.gemini_api_key},
+        json=payload,
+        timeout=20,
     )
     response.raise_for_status()
     text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
