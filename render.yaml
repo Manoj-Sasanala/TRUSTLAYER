@@ -26,3 +26,17 @@ services:
         value: warrant.db
 # shortcut: free tier has no disk, so SQLite resets on each deploy. Seed runs on boot.
 # Upgrade to a paid plan with a disk (or Postgres) before real money.
+
+  - type: web
+    name: warrant-ui
+    runtime: static
+    rootDir: frontend
+    plan: free
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: warrant-api
+          property: host
