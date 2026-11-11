@@ -1,0 +1,91 @@
+:root {
+  /* Crisp Light Design System matching TRUSTLAYER product screen */
+  --bg-app: #f0f4f9;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f8fafc;
+  
+  --border-card: #e2e8f0;
+  --border-input: #cbd5e1;
+  --border-focus: #1d6bf3;
+
+  --text-title: #0f172a;
+  --text-body: #1e293b;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  --brand-blue: #1d6bf3;
+  --brand-blue-hover: #1558d6;
+  --brand-blue-subtle: #eff6ff;
+
+  --green-bg: #f0fdf4;
+  --green-badge: #dcfce7;
+  --green-border: #bbf7d0;
+  --green-text: #15803d;
+  --green-stripe: #22c55e;
+
+  --red-bg: #fef2f2;
+  --red-badge: #fee2e2;
+  --red-border: #fecaca;
+  --red-text: #b91c1c;
+  --red-stripe: #ef4444;
+
+  --amber-bg: #fffbeb;
+  --amber-badge: #fef3c7;
+  --amber-border: #fde68a;
+  --amber-text: #b45309;
+  --amber-stripe: #f59e0b;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background-color: var(--bg-app);
+  color-scheme: light;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-app);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Monospace font with tabular numbers */
+.mono-font {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keyboard focus ring */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-blue) !important;
+  outline-offset: 2px !important;
+}
+
+/* Smooth button transitions */
+button {
+  font-family: inherit;
+  transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
