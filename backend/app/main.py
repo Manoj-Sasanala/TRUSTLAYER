@@ -1,6 +1,9 @@
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from uuid import uuid4
+
+import sys
 
 import httpx
 from fastapi import FastAPI, HTTPException
@@ -77,7 +80,42 @@ def _state(quote: dict, spent: str = "0.00", capture: dict | None = None) -> dic
     }
 
 
+def _risk(intent: dict, mandate: dict, state: dict) -> float:
+    """Advisory ML score. Never changes the decision; 0.0 when the model is unavailable."""
+    try:
+        root = Path(__file__).resolve().parents[2]
+        if str(root) not in sys.path:
+            sys.path.insert(0, str(root))
+        from ml.predict import score_intent
+
+        now = datetime.now(timezone.utc)
+        purchases = store.list_purchases()
+        recent = [
+            row
+            for row in purchases
+            if row["intent"].get("mandate_id") == mandate["id"]
+            and now
+            - datetime.fromisoformat(row["created_at"].replace("Z", "+00:00"))
+            < timedelta(hours=1)
+        ]
+        return float(
+            score_intent(
+                amount=intent["amount"],
+                txn_count_1h=len(recent),
+                mandate_limit=mandate["total_budget"],
+                merchant_is_new=not any(
+                    row["intent"].get("merchant_id") == intent.get("merchant_id")
+                    for row in purchases
+                ),
+                hour_of_day=now.hour,
+            )["risk"]
+        )
+    except Exception:
+        return 0.0
+
+
 def _decide(intent: dict, mandate: dict, state: dict) -> dict:
+    state["risk"] = _risk(intent, mandate, state)
     try:
         decision = evaluate(intent, mandate, state)
     except NotImplementedError:

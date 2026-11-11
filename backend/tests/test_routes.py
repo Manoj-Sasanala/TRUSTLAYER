@@ -196,3 +196,10 @@ def test_demo_attacks_pass_the_state_rules_need(client, monkeypatch):
             assert intent["amount"] == "180.00"
 
     assert client.post("/demo/attack/nope").status_code == 404
+
+
+def test_over_cap_names_the_blocking_rule_and_carries_a_risk_score(client):
+    body = client.post("/demo/attack/over_cap").json()
+    assert body["decision"]["decision"] == "BLOCK"
+    assert body["decision"]["reason_codes"] == ["R1"]
+    assert 0.0 <= body["decision"]["risk"] <= 1.0

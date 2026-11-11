@@ -139,8 +139,8 @@ def evaluate(intent: dict, mandate: dict, state: dict) -> dict:
             reason_codes.append("R7")
             payment_field_deviated = True
 
-    # R8: amount > approval_threshold
-    if intent_amount > approval_threshold:
+    # R8: amount > approval_threshold, only when no other rule already fired
+    if not reason_codes and intent_amount > approval_threshold:
         reason_codes.append("R8")
 
     # R9: injection phrase in agent_note and a payment field deviated
