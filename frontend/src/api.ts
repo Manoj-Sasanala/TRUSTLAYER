@@ -61,7 +61,11 @@ export class ApiError extends Error {
 export function apiBase(): string {
   const configured = import.meta.env.VITE_API_URL;
   if (typeof configured === "string" && configured.trim() !== "") {
-    return configured.trim().replace(/\/$/, "");
+    // Render injects the bare hostname, so add the scheme when it is missing.
+    return configured
+      .trim()
+      .replace(/\/$/, "")
+      .replace(/^(?!https?:\/\/)/, "https://");
   }
   return "/api";
 }
