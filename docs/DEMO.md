@@ -7,9 +7,7 @@ screen — the beats below are what must happen, the wording is yours.
 
 1. Wake the API: open `https://warrant-api-jeo5.onrender.com/health`, wait for `{"status":"ok"}`.
    Free tier sleeps; a cold first click looks like a broken product.
-2. Log in to PayPal sandbox as the buyer in a second tab, BEFORE recording:
-   user `sb-p5uyy53857645@personal.example.com` (password: ask Manoj — never the India account,
-   it always errors). Keep that tab ready; you switch to it once, mid-demo.
+2. Log in to PayPal sandbox as a buyer account in a second tab, BEFORE recording. Keep that tab ready; you switch to it once, mid-demo.
 3. Dashboard open at `https://warrant-ui.onrender.com`, mode **Live API**, zoom 110%, no other tabs,
    bookmarks bar hidden.
 4. Do not pre-click anything. The panels start empty on purpose ("No request yet", "No attack run yet",

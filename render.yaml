@@ -19,7 +19,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: AGENT_MODE
-        value: mock
+        value: gemini
       - key: CATALOG_SIGNING_KEY
         generateValue: true
       - key: DATABASE_PATH

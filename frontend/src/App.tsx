@@ -73,9 +73,9 @@ export function App() {
           <div className="brand-logo-slot">
             <BrandShieldLogo size={30} />
           </div>
-          <span className="brand-name">TRUSTLAYER</span>
+          <span className="brand-name">WARRANT</span>
           <span className="brand-divider" aria-hidden="true">|</span>
-          <span className="brand-tagline">AI can decide. TRUSTLAYER decides whether it can spend.</span>
+          <span className="brand-tagline">AI can decide. WARRANT decides whether it can spend.</span>
         </div>
 
         <div className="topbar-right">

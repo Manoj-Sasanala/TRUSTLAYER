@@ -50,7 +50,7 @@ def approve(monkeypatch):
     monkeypatch.setattr(main, "evaluate", lambda *_: decision("APPROVE"))
     calls = []
 
-    async def fake_create_order(amount, currency, reference_id, request_id):
+    async def fake_create_order(amount, currency, reference_id, request_id, **kwargs):
         calls.append(amount)
         return {
             "id": "ORDER1",
