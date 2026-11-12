@@ -11,7 +11,21 @@ interface SpendPanelProps {
 export function SpendPanel({ mode, onToast }: SpendPanelProps) {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState<SpendResult | null>(null);
+  // Survive a full page reload (e.g. PayPal returning to this same tab):
+  // the last request is restored instead of dropping back to "No request yet".
+  const [result, setResult] = useState<SpendResult | null>(() => {
+    try {
+      const raw = localStorage.getItem("warrant_spend_last");
+      if (!raw) return null;
+      const parsed: unknown = JSON.parse(raw);
+      if (typeof parsed === "object" && parsed !== null && "purchase_id" in parsed) {
+        return parsed as SpendResult;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  });
   const [approved, setApproved] = useState(false);
   const [capture, setCapture] = useState<CaptureResult | null>(null);
 
@@ -23,6 +37,11 @@ export function SpendPanel({ mode, onToast }: SpendPanelProps) {
     try {
       const res = await requestSpend(mode, text.trim());
       setResult(res);
+      try {
+        localStorage.setItem("warrant_spend_last", JSON.stringify(res));
+      } catch {
+        // storage unavailable — panel still works for this session
+      }
       onToast?.({ type: "success", text: `${res.decision} $${res.amount}` });
     } catch (err) {
       onToast?.({ type: "error", text: `Request failed: ${describeError(err)}` });
