@@ -122,9 +122,9 @@ vite, ag-grid, github-actions, render
 ## Links
 
 - GitHub: https://github.com/Manoj-Sasanala/TRUSTLAYER
-- Live app: `<paste the Render dashboard URL>`
+- Live app: https://warrant-ui.onrender.com
 - Video: `<paste the YouTube or Loom URL>`
-- API docs: `<paste the Render API URL>/docs`
+- API docs: https://warrant-api-jeo5.onrender.com/docs
 
 ## Media checklist
 

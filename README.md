@@ -11,6 +11,11 @@ intent against the mandate and only then triggers a PayPal sandbox payment.
 
 Injected text can change what the agent says. It cannot change what is allowed.
 
+**Live demo:** https://warrant-ui.onrender.com — open it, click **Live API**, then fire an attack in the Attack Lab.
+**API docs:** https://warrant-api-jeo5.onrender.com/docs
+
+Free hosting sleeps when idle, so the first load can take ~40 seconds.
+
 ## What happens on one purchase
 
 ```
