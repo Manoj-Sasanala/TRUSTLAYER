@@ -518,6 +518,11 @@
   border: 1px solid var(--red-border);
 }
 
+.status-banner-idle {
+  background-color: var(--bg-card-alt);
+  border: 1px solid var(--border-card);
+}
+
 .status-banner-icon {
   display: flex;
   align-items: center;

@@ -16,18 +16,20 @@ interface AuditPanelProps {
 
 export function AuditPanel({ mode, onToast }: AuditPanelProps) {
   const [verifying, setVerifying] = useState(false);
+  const [verified, setVerified] = useState(false);
   const [result, setResult] = useState<AuditResult>({
     ok: true,
-    checked: 12,
+    checked: 0,
     first_bad_seq: null,
   });
-  const [lastVerifiedIso, setLastVerifiedIso] = useState<string>("2026-11-08T09:12:34Z");
+  const [lastVerifiedIso, setLastVerifiedIso] = useState<string>("");
 
   async function handleVerify() {
     setVerifying(true);
     try {
       const outcome = await checkAudit(mode);
       setResult(outcome);
+      setVerified(true);
       const nowIso = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
       setLastVerifiedIso(nowIso);
 
@@ -93,11 +95,19 @@ export function AuditPanel({ mode, onToast }: AuditPanelProps) {
 
         {/* Verification Status Banner */}
         <div
-          className={`audit-status-banner ${isOk ? "status-banner-ok" : "status-banner-err"}`}
+          className={`audit-status-banner ${
+            !verified
+              ? "status-banner-idle"
+              : isOk
+                ? "status-banner-ok"
+                : "status-banner-err"
+          }`}
           role="status"
         >
           <div className="status-banner-icon">
-            {isOk ? (
+            {!verified ? (
+              <DocumentCheckIcon size={22} className="icon-blue" />
+            ) : isOk ? (
               <SolidCheckCircle size={22} />
             ) : (
               <XCircleIcon size={22} className="icon-red" />
@@ -105,14 +115,18 @@ export function AuditPanel({ mode, onToast }: AuditPanelProps) {
           </div>
           <div className="status-banner-content">
             <div className="status-banner-headline">
-              {isOk
-                ? `OK, ${verifiedCount} records verified`
-                : `BROKEN at record ${result.first_bad_seq ?? "?"}`}
+              {!verified
+                ? "Not verified yet"
+                : isOk
+                  ? `OK, ${verifiedCount} records verified`
+                  : `BROKEN at record ${result.first_bad_seq ?? "?"}`}
             </div>
             <div className="status-banner-subline">
-              {isOk
-                ? "Hash chain is intact."
-                : "Discontinuity detected in hash chain sequence."}
+              {!verified
+                ? "Click Verify records to check the audit chain."
+                : isOk
+                  ? "Hash chain is intact."
+                  : "Discontinuity detected in hash chain sequence."}
             </div>
           </div>
         </div>
@@ -121,7 +135,7 @@ export function AuditPanel({ mode, onToast }: AuditPanelProps) {
         <div className="audit-footer-timestamp">
           <div className="last-verified-label">Last Verified</div>
           <div className="last-verified-value mono-font">
-            {formatAuditStamp(lastVerifiedIso)}
+            {lastVerifiedIso ? formatAuditStamp(lastVerifiedIso) : "—"}
           </div>
         </div>
       </div>
