@@ -1,3 +1,4 @@
+import httpx
 import pytest
 from fastapi.testclient import TestClient
 
@@ -128,6 +129,23 @@ def test_escalate_waits_for_a_human(client, approve, monkeypatch):
 
     assert client.post("/purchases/p_1/reject").json() == {"status": "REJECTED"}
     assert client.post("/purchases/p_1/approve").status_code == 409
+
+
+def test_rejected_payee_falls_back_to_amount_only_order(client, approve, monkeypatch):
+    """Sandbox rejects a payee that is not a real PayPal account. The order must
+    still be created amount-only instead of losing the approval_url."""
+    async def fake_create_order(amount, currency, reference_id, request_id, payee_email=None):
+        if payee_email:
+            raise httpx.HTTPError("invalid payee")
+        return {
+            "id": "ORDER2",
+            "links": [{"rel": "approve", "href": "https://paypal.test/approve2"}],
+        }
+
+    monkeypatch.setattr(main.paypal, "create_order", fake_create_order)
+    client.post("/mandates", json=MANDATE)
+    body = client.post("/purchases", json={"intent": INTENT}).json()
+    assert body["approval_url"] == "https://paypal.test/approve2"
 
 
 def test_capture_needs_approval(client, approve, monkeypatch):

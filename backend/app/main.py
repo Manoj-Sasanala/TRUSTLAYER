@@ -146,20 +146,26 @@ def _record(intent: dict, decision: dict, key: str | None = None) -> dict:
 async def _place_order(intent: dict, quote: dict) -> tuple[str | None, str | None]:
     """An APPROVE or ESCALATE still needs a PayPal order for the human to approve. A PayPal
     outage must not lose the decision, so the purchase is already stored before we try."""
+    payee_email = None
+    payee_merchant_id = intent.get("merchant_id")
+    if payee_merchant_id:
+        merchant = merchants.get_merchant(payee_merchant_id)
+        if merchant:
+            payee_email = merchant.get("payee") or None
     try:
-        merchant = None
-        payee_email = None
-        payee_merchant_id = intent.get("merchant_id")
-        if payee_merchant_id:
-            merchant = store.get_merchant(payee_merchant_id)
-            if merchant:
-                payee_email = merchant.get("payee") or None
         order = await paypal.create_order(
             quote["amount"], quote["currency"], intent["id"], intent["id"],
-            payee_email=payee_email, payee_merchant_id=payee_merchant_id,
+            payee_email=payee_email,
         )
     except httpx.HTTPError:
-        return None, None
+        # Sandbox rejects a payee that is not a real PayPal account (our seeded
+        # registry emails are fake). Retry amount-only rather than losing the order.
+        try:
+            order = await paypal.create_order(
+                quote["amount"], quote["currency"], intent["id"], intent["id"]
+            )
+        except httpx.HTTPError:
+            return None, None
     return order.get("id"), paypal.approve_url(order)
 
 

@@ -113,7 +113,7 @@ amount, currency and order id. A mocked "PASS" is not accepted here.
 ## Tests
 
 ```bash
-cd backend && python -m pytest -q     # 75 tests
+cd backend && python -m pytest -q     # 76 tests
 python eval/run.py                    # 40/40 adversarial cases blocked
 cd frontend && npm run build          # type-check and production build
 ```

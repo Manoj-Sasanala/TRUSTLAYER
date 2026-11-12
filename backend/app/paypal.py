@@ -38,19 +38,15 @@ async def _call(method: str, path: str, headers: dict | None = None, **kwargs) -
 
 async def create_order(
     amount: str, currency: str, reference_id: str, request_id: str,
-    payee_email: str | None = None, payee_merchant_id: str | None = None
+    payee_email: str | None = None
 ) -> dict:
     """`amount` is the 2-decimal string from the locked quote. PayPal-Request-Id makes retries safe."""
     purchase_unit: dict = {
         "reference_id": reference_id,
         "amount": {"currency_code": currency, "value": amount},
     }
-    if payee_email or payee_merchant_id:
-        purchase_unit["payee"] = {}
-        if payee_email:
-            purchase_unit["payee"]["email_address"] = payee_email
-        if payee_merchant_id:
-            purchase_unit["payee"]["merchant_id"] = payee_merchant_id
+    if payee_email:
+        purchase_unit["payee"] = {"email_address": payee_email}
     return await _call(
         "POST",
         "/v2/checkout/orders",

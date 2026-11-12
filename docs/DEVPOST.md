@@ -86,7 +86,7 @@ Prompt injection cannot buy anything, because the model was never the thing gran
 
 - 40/40 adversarial cases blocked, including prompt injection, payee switching, price mismatch and
   replay.
-- 75 backend tests and the frontend production build run in CI on every push. An 8-test Playwright suite covers the dashboard end to end (`npx playwright test` in `frontend/`).
+- 76 backend tests and the frontend production build run in CI on every push. An 8-test Playwright suite covers the dashboard end to end (`npx playwright test` in `frontend/`).
 - Three decisions, one engine, zero model involvement in the verdict.
 - An audit chain that fails loudly when a row is edited.
 
