@@ -33,8 +33,6 @@ services:
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
     envVars:
+      # fromService does not resolve the hostname into the static build, so pin it.
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: warrant-api
-          property: host
+        value: https://warrant-api-jeo5.onrender.com
