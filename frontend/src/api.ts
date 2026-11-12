@@ -48,6 +48,21 @@ export interface AuditResult {
 
 export type AttackType = "over_cap" | "over_budget" | "payee_switch" | "injection";
 
+export interface SpendResult {
+  purchase_id: string;
+  decision: string;
+  amount: string;
+  note: string;
+  reason_codes: string[];
+  approval_url: string | null;
+}
+
+export interface CaptureResult {
+  status: string;
+  capture_id: string | null;
+  violations: string[];
+}
+
 export class ApiError extends Error {
   readonly status: number;
 
@@ -220,6 +235,21 @@ export function postAuditVerify(): Promise<unknown> {
   return request("/audit/verify", { method: "POST" });
 }
 
+export function postRequest(userRequest: string, mandateId: string): Promise<unknown> {
+  return request("/purchases/request", {
+    method: "POST",
+    body: JSON.stringify({ user_request: userRequest, mandate_id: mandateId }),
+  });
+}
+
+export function postApprove(purchaseId: string): Promise<unknown> {
+  return request(`/purchases/${purchaseId}/approve`, { method: "POST" });
+}
+
+export function postCapture(purchaseId: string): Promise<unknown> {
+  return request(`/purchases/${purchaseId}/capture`, { method: "POST" });
+}
+
 function readCodes(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return value.filter((code): code is string => typeof code === "string" && code.trim() !== "");
@@ -289,6 +319,60 @@ export function readAudit(payload: unknown): AuditResult {
     ok: payload.ok,
     checked: typeof checked === "number" && Number.isFinite(checked) ? checked : null,
     first_bad_seq: typeof first === "number" && Number.isFinite(first) ? first : null,
+  };
+}
+
+export function readSpend(payload: unknown): SpendResult {
+  if (!isRecord(payload)) {
+    throw new ApiError("The request response was not an object.", 200);
+  }
+  const intent = isRecord(payload.intent) ? payload.intent : {};
+  const decision = isRecord(payload.decision) ? payload.decision : {};
+  const amount = typeof intent.amount === "string" && intent.amount.trim() ? intent.amount : "-";
+  const url = payload.approval_url;
+  return {
+    purchase_id:
+      typeof payload.purchase_id === "string" && payload.purchase_id.trim()
+        ? payload.purchase_id
+        : "-",
+    decision:
+      typeof decision.decision === "string" && decision.decision.trim() ? decision.decision : "-",
+    amount,
+    note: typeof intent.agent_note === "string" ? intent.agent_note : "",
+    reason_codes: readCodes(decision.reason_codes),
+    approval_url: typeof url === "string" && url.trim() ? url : null,
+  };
+}
+
+export function readCapture(payload: unknown): CaptureResult {
+  if (!isRecord(payload)) {
+    throw new ApiError("The capture response was not an object.", 200);
+  }
+  let captureId: string | null = null;
+  if (isRecord(payload.capture)) {
+    try {
+      const units = (payload.capture as Record<string, unknown>).purchase_units;
+      if (Array.isArray(units) && isRecord(units[0])) {
+        const payments = (units[0] as Record<string, unknown>).payments;
+        if (isRecord(payments) && Array.isArray(payments.captures) && isRecord(payments.captures[0])) {
+          const id = (payments.captures[0] as Record<string, unknown>).id;
+          if (typeof id === "string" && id.trim()) captureId = id;
+        }
+      }
+    } catch {
+      captureId = null;
+    }
+  }
+  if (typeof payload.capture_id === "string" && payload.capture_id.trim()) {
+    captureId = payload.capture_id;
+  }
+  const violations = Array.isArray(payload.violations)
+    ? payload.violations.filter((v): v is string => typeof v === "string")
+    : [];
+  return {
+    status: typeof payload.status === "string" && payload.status.trim() ? payload.status : "-",
+    capture_id: captureId,
+    violations,
   };
 }
 

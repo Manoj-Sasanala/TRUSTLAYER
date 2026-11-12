@@ -4,6 +4,7 @@ import { AttackLab } from "./components/AttackLab.tsx";
 import { AuditPanel } from "./components/AuditPanel.tsx";
 import { DecisionFeed } from "./components/DecisionFeed.tsx";
 import { MandateEditor } from "./components/MandateEditor.tsx";
+import { SpendPanel } from "./components/SpendPanel.tsx";
 import { BrandShieldLogo } from "./icons.tsx";
 import "./App.css";
 
@@ -106,6 +107,11 @@ export function App() {
           <MandateEditor mode={mode} onToast={addToast} />
           <AttackLab mode={mode} onToast={addToast} />
           <AuditPanel mode={mode} onToast={addToast} />
+        </section>
+
+        {/* Spend row: ask the agent, then pay */}
+        <section className="spend-wrap" aria-label="Spend real money">
+          <SpendPanel mode={mode} onToast={addToast} />
         </section>
 
         {/* Bottom Row: Full-Width Decision Feed */}

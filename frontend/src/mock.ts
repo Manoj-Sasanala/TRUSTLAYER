@@ -1,4 +1,4 @@
-import { isMoney, type AttackResult, type AttackType, type AuditResult, type FeedRow, type Mandate } from "./api.ts";
+import { isMoney, type AttackResult, type AttackType, type AuditResult, type FeedRow, type Mandate, type SpendResult, type CaptureResult } from "./api.ts";
 
 export const MERCHANTS = [
   { id: "m_101", name: "Volt & Wire" },
@@ -191,4 +191,39 @@ export function mockAttack(type: AttackType): AttackResult {
 
 export function mockVerify(): AuditResult {
   return { ok: true, checked: auditChecked, first_bad_seq: null };
+}
+
+export function mockRequest(text: string): SpendResult {
+  const words = text.toLowerCase();
+  const pick = words.includes("watch")
+    ? { item: "Smart Watch", amount: "79.99" }
+    : { item: "Wireless Earbuds", amount: "24.99" };
+  attackCount += 1;
+  auditChecked += 1;
+  const id = `spend_mock_${attackCount}`;
+  const row: FeedRow = {
+    id,
+    time: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
+    item: pick.item,
+    amount: pick.amount,
+    decision: "APPROVE",
+    reason_codes: [],
+    risk: 0.12,
+  };
+  feed = [row, ...feed];
+  notify();
+  return {
+    purchase_id: id,
+    decision: "APPROVE",
+    amount: pick.amount,
+    note: `matched ${pick.item} at $${pick.amount}`,
+    reason_codes: [],
+    approval_url: null,
+  };
+}
+
+export function mockApprove(_purchaseId: string): void {}
+
+export function mockCapture(_purchaseId: string): CaptureResult {
+  return { status: "CAPTURED", capture_id: "CAP-MOCK", violations: [] };
 }
