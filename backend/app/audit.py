@@ -18,6 +18,8 @@ def append(kind: str, payload: dict) -> dict:
     """Link one record to the previous one. The chain is append-only."""
     conn = get_db()
     try:
+        # Serialize seq allocation: two concurrent writers must not pick the same seq.
+        conn.execute("BEGIN IMMEDIATE")
         last = conn.execute(
             "SELECT seq, hash FROM audit_chain ORDER BY seq DESC LIMIT 1"
         ).fetchone()

@@ -258,6 +258,8 @@ export function DecisionFeed({ mode, onFeedUpdated }: DecisionFeedProps) {
 
       <div className="ag-theme-quartz feed-ag-grid-wrapper">
         <AgGridReact<FeedRow>
+          // The legacy CSS theme is imported, so tell the grid not to apply themeQuartz too.
+          theme="legacy"
           rowData={rowData}
           columnDefs={columnDefs}
           getRowId={getRowId}

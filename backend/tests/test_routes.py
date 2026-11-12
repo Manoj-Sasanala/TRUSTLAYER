@@ -86,6 +86,13 @@ def test_mandate_roundtrip(client):
     assert client.get("/mandates/missing").status_code == 404
 
 
+def test_saving_the_same_mandate_twice_updates_it(client):
+    assert client.post("/mandates", json=MANDATE).status_code == 201
+    changed = {**MANDATE, "total_budget": "150.00"}
+    assert client.post("/mandates", json=changed).status_code == 201
+    assert client.get("/mandates/m_1").json()["total_budget"] == "150.00"
+
+
 def test_catalog_is_seeded(client):
     items = client.get("/catalog").json()
     assert len(items) == 12

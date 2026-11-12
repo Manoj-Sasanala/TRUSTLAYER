@@ -45,3 +45,13 @@ def test_key_order_does_not_change_the_hash():
 
 def test_genesis_is_sixty_four_zeros():
     assert GENESIS == "0" * 64
+
+
+def test_concurrent_appends_do_not_collide():
+    from concurrent.futures import ThreadPoolExecutor
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(lambda i: append("decision", {"purchase_id": f"p{i}"}), range(8)))
+
+    assert sorted(r["seq"] for r in results) == list(range(1, 9))
+    assert verify() == {"ok": True, "checked": 8, "first_bad_seq": None}

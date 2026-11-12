@@ -38,7 +38,7 @@ export function MandateEditor({ mode, onSaved, onToast }: MandateEditorProps) {
   const [newTagInput, setNewTagInput] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [saving, setSaving] = useState(false);
-  const [savedSuccess, setSavedSuccess] = useState(true); // default true to match screenshot!
+  const [savedSuccess, setSavedSuccess] = useState(false);
 
   const validation = buildMandate({
     ...input,

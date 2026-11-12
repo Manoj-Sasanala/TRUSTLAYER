@@ -36,9 +36,16 @@ def create_mandate(data: dict) -> dict:
     conn = get_db()
     try:
         conn.execute(
+            # Upsert: the editor saves the same mandate id every time.
             "INSERT INTO mandates(id, total_budget, per_txn_cap, allowed_merchants,"
             " allowed_categories, currency, expires_at, approval_threshold)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            " ON CONFLICT(id) DO UPDATE SET"
+            " total_budget=excluded.total_budget, per_txn_cap=excluded.per_txn_cap,"
+            " allowed_merchants=excluded.allowed_merchants,"
+            " allowed_categories=excluded.allowed_categories,"
+            " currency=excluded.currency, expires_at=excluded.expires_at,"
+            " approval_threshold=excluded.approval_threshold",
             (
                 data["id"],
                 data["total_budget"],
