@@ -140,7 +140,7 @@ export function SpendPanel({ mode, onToast }: SpendPanelProps) {
             ) : (
               <div className="spend-meta-line">No PayPal order for this request.</div>
             )}
-            {(result.decision === "ESCALATE" || result.decision === "APPROVE") && !approved ? (
+            {result.decision === "ESCALATE" && !approved ? (
               <button
                 type="button"
                 className="btn-outline-verify"
@@ -150,7 +150,7 @@ export function SpendPanel({ mode, onToast }: SpendPanelProps) {
                 Mark approved
               </button>
             ) : null}
-            {approved && !capture ? (
+            {(approved || result.decision === "APPROVE") && !capture ? (
               <button
                 type="button"
                 className="btn-outline-verify"
