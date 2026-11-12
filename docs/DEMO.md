@@ -42,7 +42,8 @@ Scroll to the **Spend it** panel. Type `cheap headphones for the office`. Click 
 
 **0:35 — the money (35s, the PayPal beat — do not skip)**
 
-Set the Approval Threshold to **Low** ($20). Ask the same request again. It now returns ESCALATE.
+Set the Approval Threshold to **Low** ($20) and click **Save my rules** — without saving, the
+backend still holds the old threshold. Ask the same request again. It now returns ESCALATE.
 Click **Open PayPal approval**, switch to the buyer tab, approve the $39.99 order, come back.
 Click **Mark approved**, then **Capture**. Wait for `Capture: CAPTURED`.
 
