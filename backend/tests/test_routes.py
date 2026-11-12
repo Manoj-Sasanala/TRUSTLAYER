@@ -148,6 +148,18 @@ def test_rejected_payee_falls_back_to_amount_only_order(client, approve, monkeyp
     assert body["approval_url"] == "https://paypal.test/approve2"
 
 
+def test_capture_unapproved_order_returns_clear_error(client, approve, monkeypatch):
+    async def fake_failing_capture(order_id):
+        raise httpx.HTTPError("ORDER_NOT_APPROVED")
+
+    monkeypatch.setattr(main.paypal, "capture_order", fake_failing_capture)
+    client.post("/mandates", json=MANDATE)
+    client.post("/purchases", json={"intent": INTENT})
+    res = client.post("/purchases/p_1/capture")
+    assert res.status_code == 409
+    assert "approve" in res.json()["detail"].lower()
+
+
 def test_capture_needs_approval(client, approve, monkeypatch):
     client.post("/mandates", json=MANDATE)
     monkeypatch.setattr(main, "evaluate", lambda *_: decision("ESCALATE", ["R8"]))

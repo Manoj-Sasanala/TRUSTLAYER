@@ -319,7 +319,15 @@ async def capture_purchase(purchase_id: str) -> dict:
     if not purchase["paypal_order_id"]:
         raise HTTPException(409, "no PayPal order for this purchase")
 
-    order = await paypal.capture_order(purchase["paypal_order_id"])
+    order = None
+    try:
+        order = await paypal.capture_order(purchase["paypal_order_id"])
+    except httpx.HTTPError:
+        # Most common cause: the buyer never approved the order in PayPal,
+        # so there is nothing to capture. Never leak a bare 500 for that.
+        raise HTTPException(
+            409, "PayPal capture failed — approve the order in PayPal first, then retry"
+        )
     violations = paypal.verify_capture(order, quote)
     status = "FLAGGED" if violations else "CAPTURED"
 
