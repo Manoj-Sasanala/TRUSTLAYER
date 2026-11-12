@@ -67,13 +67,8 @@ interface OutcomeState {
 export function AttackLab({ mode, onAttackFired, onToast }: AttackLabProps) {
   const [runningType, setRunningType] = useState<AttackType | null>(null);
 
-  // Default outcome matches screenshot exactly!
-  const [outcome, setOutcome] = useState<OutcomeState>({
-    decision: "BLOCK",
-    rules: ["R1", "R2", "R5", "R9"],
-    riskPct: "92%",
-    explanation: "Injection detected in request.",
-  });
+  // No fabricated result: the panel stays empty until an attack actually runs.
+  const [outcome, setOutcome] = useState<OutcomeState | null>(null);
 
   async function handleFireAttack(type: AttackType) {
     if (runningType !== null) return;
@@ -147,20 +142,31 @@ export function AttackLab({ mode, onAttackFired, onToast }: AttackLabProps) {
 
       {/* Attack Outcome Banner */}
       <div className="attack-outcome-card" role="status">
-        <div className="outcome-shield-icon">
-          <ShieldIcon size={26} className="shield-svg-green" />
-        </div>
-        <div className="outcome-details">
-          <div className="outcome-decision-title">
-            Decision: {outcome.decision}
+        {outcome ? (
+          <>
+            <div className="outcome-shield-icon">
+              <ShieldIcon size={26} className="shield-svg-green" />
+            </div>
+            <div className="outcome-details">
+              <div className="outcome-decision-title">
+                Decision: {outcome.decision}
+              </div>
+              <div className="outcome-meta-line">
+                Rules: {outcome.rules.length > 0 ? outcome.rules.join(", ") : "-"} | Risk: {outcome.riskPct}
+              </div>
+              <div className="outcome-explanation-line">
+                {outcome.explanation}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="outcome-details">
+            <div className="outcome-decision-title">No attack run yet</div>
+            <div className="outcome-meta-line">
+              Pick a card above to see the Trust Engine respond.
+            </div>
           </div>
-          <div className="outcome-meta-line">
-            Rules: {outcome.rules.length > 0 ? outcome.rules.join(", ") : "-"} | Risk: {outcome.riskPct}
-          </div>
-          <div className="outcome-explanation-line">
-            {outcome.explanation}
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

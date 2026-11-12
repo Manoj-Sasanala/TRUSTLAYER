@@ -16,6 +16,7 @@ test("dashboard loads against the live API", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Mandate Editor" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Attack Lab" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Save my rules" })).toBeVisible();
+  await expect(page.getByText("No attack run yet")).toBeVisible();
 
   expect(errors, errors.join("\n")).toEqual([]);
 });
