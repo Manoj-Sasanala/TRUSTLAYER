@@ -107,6 +107,18 @@ difference is whether the thing holding the money has its own opinion.
 python, fastapi, pydantic, sqlite, paypal-orders-v2, google-gemini, scikit-learn, react, typescript,
 vite, ag-grid, github-actions, render
 
+## Tools used
+
+| Tool | How it is used |
+|---|---|
+| **PayPal Orders v2 (sandbox)** | Creates the order after APPROVE, captures it after human approval, then verifies the captured amount, currency and order id against the locked quote. `PayPal-Request-Id` makes retries idempotent. |
+| **Google Gemini** (`gemini-3.1-flash-lite`) | Turns a free-text request into a validated purchase intent: item id, amount, merchant. It proposes; it never decides. A deterministic mock replaces it if the API fails. |
+| **scikit-learn** | Random Forest risk score, trained on purchase intents. Displayed on every decision as an advisory signal; it has no vote in the verdict. |
+| **AG Grid Community** | The decision feed. Every purchase is a row; the reason codes and the APPROVE/BLOCK/ESCALATE state are readable at a glance. |
+| **Render** | Hosts the API and the dashboard from one Blueprint; the dashboard's API URL is injected at build time. |
+| **GitHub Actions** | Runs the backend tests, the adversarial evaluation build and the dashboard build on every push. |
+| **Cursor** | Used as a coding assistant while writing and refactoring the backend, rules engine and dashboard. Design, review and every test run were done by the team. |
+
 ## Links
 
 - GitHub: https://github.com/Manoj-Sasanala/TRUSTLAYER

@@ -79,6 +79,12 @@ npm run dev                            # dashboard on :5173, proxies /api to :80
 `AGENT_MODE=mock` (default) needs no key. `AGENT_MODE=gemini` plus `GEMINI_API_KEY` uses the real
 model; any failure falls back to the mock, so the demo never dies on a network error.
 
+No credentials are needed to see the whole pipeline work. Every endpoint, the rules, the attack lab
+and the audit chain run with `AGENT_MODE=mock` and the seeded catalog. Only the PayPal capture step
+needs sandbox keys, which you create free at
+[developer.paypal.com](https://developer.paypal.com/dashboard/applications/sandbox) and put in
+`backend/.env` as `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET`.
+
 ## Deploy
 
 `render.yaml` defines both services: `warrant-api` (FastAPI + SQLite) and `warrant-ui` (static
