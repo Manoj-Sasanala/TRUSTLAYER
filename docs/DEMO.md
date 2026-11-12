@@ -42,8 +42,8 @@ Scroll to the **Spend it** panel. Type `cheap headphones for the office`. Click 
 
 Set the Approval Threshold to **Low** ($20) and click **Save my rules** — without saving, the
 backend still holds the old threshold. Ask the same request again. It now returns ESCALATE.
-Click **Open PayPal approval**, switch to the buyer tab, approve the $39.99 order, come back.
-Click **Mark approved**, then **Capture**. Wait for `Capture: CAPTURED`.
+Click **Open PayPal approval**, approve the $39.99 order in the buyer tab — PayPal sends you
+straight back to the dashboard. Click **Mark approved**, then **Capture**. Wait for `Capture: CAPTURED`.
 
 > "Same request, stricter rule — now it escalates instead of approving. A human approves in PayPal,
 > I mark it approved, the engine captures and verifies the exact amount against the locked quote.

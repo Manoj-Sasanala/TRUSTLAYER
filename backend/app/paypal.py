@@ -54,6 +54,11 @@ async def create_order(
         json={
             "intent": "CAPTURE",
             "purchase_units": [purchase_unit],
+            "application_context": {
+                # No return_url means PayPal strands the buyer with nowhere to go back to.
+                "return_url": "https://warrant-ui.onrender.com",
+                "cancel_url": "https://warrant-ui.onrender.com",
+            },
         },
     )
 
