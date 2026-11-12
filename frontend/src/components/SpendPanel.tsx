@@ -125,8 +125,7 @@ export function SpendPanel({ mode, onToast }: SpendPanelProps) {
               <button
                 type="button"
                 className="btn-outline-verify"
-                disabled={busy || !result.approval_url}
-                title={result.approval_url ? undefined : "Needs a PayPal order first"}
+                disabled={busy}
                 onClick={() => void handleApprove()}
               >
                 Mark approved
